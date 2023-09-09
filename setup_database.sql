@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS Upsell_db;
+CREATE USER IF NOT EXISTS 'first_usr'@'DINOBI_SERVE_HOST' IDENTIFIED BY 'Upselldb122#@!';
+GRANT ALL PRIVILEGES ON Upsell_db . * TO 'first_usr'@'DINOBI_SERVE_HOST';
+GRANT SELECT ON performance_schema . * TO 'first_usr'@'DINOBI_SERVE_HOST';
