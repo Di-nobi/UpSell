@@ -45,6 +45,7 @@ class BaseModel:
     
     def save(self):
         """Saves new data to storage"""
+        self.updated = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
     
@@ -52,6 +53,7 @@ class BaseModel:
         data = self.__dict__.copy()
         if "created" in data:
             data["created"] = data["created"].strftime("%Y-%m-%dT%H:%M:%S.%f")
-        data['updated'] = data['updated'].strftime("%Y-%m-%dT%H:%M:%S.%f")
+        if "updated" in data:
+            data['updated'] = data['updated'].strftime("%Y-%m-%dT%H:%M:%S.%f")
         data["__class__"] = self.__class__.__name__
         return data

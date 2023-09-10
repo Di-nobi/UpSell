@@ -4,6 +4,7 @@ import models
 from models.base import BaseModel, Base
 from models.user import User
 from models.open_deal import Opendeal
+from models.close_deal import Closeddeal
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -12,6 +13,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 classes = {
     'User': User,
     'Opendeal': Opendeal,
+    'Closeddeal': Closeddeal
 
 }
 
@@ -28,16 +30,16 @@ class database():
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, pssword, host, db))
 
-    def all(self, cls):
+    def all(self, cls=None):
         """Gets all data available"""
-        new_dict = {}
+        set_dict = dict()
         for cls in classes:
             if not cls:
-                objt = self.__session.query(cls).all()
-                for obj in objt:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return new_dict
+                obj = self.__session.query(cls).all()
+                for find in obj:
+                    key = find.__class__.__name__ + '.' + find.id
+                set_dict[key] = find
+        return set_dict
     
     def new(self, obj):
         """Adds new data to the database"""
